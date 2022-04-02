@@ -10,7 +10,7 @@ while True:
     screen.fill((0, 0, 0))
 
     event = pygame.event.poll()
-    if event.type == pygame.QUIT():
+    if event.type == pygame.QUIT:
         break
 
     pygame.display.update()
