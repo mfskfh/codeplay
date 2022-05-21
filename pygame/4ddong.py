@@ -64,7 +64,7 @@ item_height = item_size[1]
 item_xPos = random.randint(0, (screen_width - item_width))
 item_yPos = random.randint(0, (screen_height - item_height))
 
-item_delay = (random.randint(1, 4) * 200)
+item_delay = (random.randint(1, 4) * 100)
 item_delay_time = 0
 
 game_font =  pygame.font.Font(None, 40)
