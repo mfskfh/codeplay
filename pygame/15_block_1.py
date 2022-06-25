@@ -1,6 +1,8 @@
 import pygame
 import random
 
+pygame.init()
+
 #화면 크기 & 생성
 screen_width = 640
 screen_height = 640
