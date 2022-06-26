@@ -63,13 +63,13 @@ Sound_WallPop = pygame.mixer.Sound("pygame/source/Sound/Meow1.wav")
 Sound_BarPop = pygame.mixer.Sound("pygame/source/Sound/Meow2.wav")
 Sound_BGM = pygame.mixer.music.load("pygame/source/Sound/Meow1.wav")
 
-pygame.mixer.music.play(-1)
+# pygame.mixer.music.play(-1)
 
 point = 0
 
 count = True
 
-def gameText(words):
+def gameText(words, purpose):
     font = pygame.font.SysFont(None, 100)
 
     text = font.render(words, True, (80, 180, 80))
@@ -77,8 +77,13 @@ def gameText(words):
     text_width = text.get_rect().size[0]
     text_height = text.get_rect().size[1]
 
-    text_xPos = screen_width / 2 - text_width / 2
-    text_yPos = screen_height / 2 - text_height /2
+    if purpose == "basic":
+        text_xPos = screen_width / 2 - text_width / 2
+        text_yPos = screen_height / 2 - text_height /2
+    
+    elif purpose == "timer":
+        text_xPos = 0
+        text_yPos = 0
 
     screen.blit(text, (text_xPos, text_yPos))
 
@@ -89,11 +94,11 @@ while running:
         count = False
         for i in range(3, 0, -1):
             screen.fill((0, 0, 0))
-            gameText(str(i))
+            gameText(str(i), "basic")
             pygame.display.update()
             pygame.time.delay(1000)
         screen.fill((0, 0, 0))
-        gameText("Go!")
+        gameText("Go!", "basic")
         pygame.display.update()
         pygame.time.delay(1000)
 
@@ -128,7 +133,7 @@ while running:
         Sound_WallPop.play()
     elif ball_yPos >= screen_height - ball_size:
         screen.fill((0, 0, 0))
-        gameText("Your Score : %d" % point)
+        gameText("Your Score : %d" % point, "basic")
         pygame.display.update()
         pygame.time.delay(2000)
         running = False
@@ -174,12 +179,14 @@ while running:
     
     if point >= 30:
         screen.fill((0, 255, 0))
-        gameText('Cleared in %d"' % timer)
+        gameText('Cleared in %d"' % timer, "basic")
         pygame.display.update()
         pygame.time.delay(2000)
         running = False
 
-    timer = pygame.time.get_ticks() / 1000
+    timer = pygame.time.get_ticks() / 1000    
+    
+    gameText(str(int(timer) - 5), "timer")
 
     pygame.display.update()
 
