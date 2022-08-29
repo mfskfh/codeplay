@@ -1,3 +1,5 @@
+# -*- conding:utf-8 -*-
+
 import random
 
 menus = ["bulgogi", "cheese"]
@@ -39,7 +41,10 @@ while press_key != "e":
         else:
             print("z")
     elif press_key != "e" or "f":
-        choose_things.append(random_things)
-        random_things = random.randint(1, 6)
-        print(random_things)
+        if press_key == "":
+            choose_things.append(random_things)
+            random_things = random.randint(1, 6)
+            print(random_things)
+        else:
+            continue
     print(choose_things)
