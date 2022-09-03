@@ -1,4 +1,4 @@
-# -*- conding:utf-8 -*-
+# -*- conding: utf-8 -*-
 
 import random
 
