@@ -4,14 +4,32 @@ import pygame
 
 pygame.init()
 
-patty = pygame.image.load("project/source/patty.png")
-patty = pygame.transform.scale(patty, (100, 100))
+bg = pygame.image.load("project/source/bg/bg.png")
+bg = pygame.transform.scale(bg, (640, 480))
+
+patty = pygame.image.load("project/source/food/patty.png")
+patty = pygame.transform.scale(patty, (200, 200))
+
+pickle = pygame.image.load("project/source/food/pickle.png")
+pickle = pygame.transform.scale(pickle, (200, 00))
+
+bread_bottom = pygame.image.load("project/source/food/bread_bottom.png")
+bread_bottom = pygame.transform.scale(bread_bottom, (200, 200))
 
 days = pygame.image.load("project/source/days.png")
 days = pygame.transform.scale(days, (100, 20))
 
-guest = pygame.image.load("project/source/guest.png")
-guest = pygame.transform.scale(guest, (300, 300))
+guest1 = pygame.image.load("project/source/guest/h.su.png")
+guest1 = pygame.transform.scale(guest1, (300, 300))
+
+guest2 = pygame.image.load("project/source/guest/d.o.y.u.p.png")
+guest2 = pygame.transform.scale(guest2, (300, 300))
+
+guest3 = pygame.image.load("project/source/guest/je.h.yk.png")
+guest3 = pygame.transform.scale(guest3, (300, 300))
+
+guest4 = pygame.image.load("project/source/guest/se.ch.png")
+guest4 = pygame.transform.scale(guest4, (300, 300))
 
 ordermenu = pygame.image.load("project/source/orthermenu.png")
 ordermenu = pygame.transform.scale(ordermenu, (100, 480))
@@ -28,6 +46,9 @@ money = pygame.transform.scale(money, (100, 20))
 money = pygame.image.load("project/source/money.png")
 money = pygame.transform.scale(money, (100, 20))
 
+foodbg = pygame.image.load("project/source/rdfoodbg.png")
+foodbg = pygame.transform.scale(foodbg, (200, 120))
+
 
 screen_width = 640
 screen_height = 480
@@ -41,15 +62,16 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    screen.fill((255, 255, 255))
-            
-    screen.blit(patty, (screen_width / 2 - 50, screen_height / 24))
-    screen.blit(ordermenu, (screen_width - 100, 60))
-    screen.blit(days, (screen_width - 100, 40))
-    screen.blit(manjok, (screen_width - 100, 20))
-    screen.blit(money, (screen_width - 100, 0))
-    screen.blit(guest, (screen_width / 2 - 150, screen_height / 2 - 150))
-    screen.blit(mademenu, (screen_width / 2 - 100, 2 * (screen_height / 3)))
+    
+    screen.blit(bg, (0, 0))
+    screen.blit(ordermenu, (screen_width - 100, 0))
+    screen.blit(days, (0, 40))
+    screen.blit(manjok, (0, 20))
+    screen.blit(money, (0, 0))
+    screen.blit(guest4, (screen_width / 2 - 150, 7))
+    screen.blit(foodbg, (screen_width / 2 - 70, 0))
+    screen.blit(patty, (screen_width / 2 - 50, 5))
+    screen.blit(bread_bottom, (screen_width / 2 - 105, 285))
 
     pygame.display.update()
 
