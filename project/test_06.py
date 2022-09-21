@@ -19,8 +19,11 @@ order_guest = 0
 order_menu = 0
 random_things = 0
 choose_things = []
+
 # 0 : 인트로 , 1 : 인트로 스토리 , 2 : 튜토리얼 ,3 : 게임진행 , 4 : 하루 끝 , 5 : 게임 끝
 game_progress_state = 0
+okbt_press_state = 0
+
 
 
 class imageload:
@@ -68,8 +71,8 @@ ok_button.x = screen_width - ok_button.img.get_size()[0] - 10
 ok_button.y = screen_height - ok_button.img.get_size()[1] - 10
 ok_button.get_rect()
 
-
 running = True
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -85,14 +88,12 @@ while running:
                 if game_progress_state == 1:
                     tutorial_bg.show()
                     ok_button.show()
+                    game_progress_state = 2
                 if game_progress_state == 2:
-                    game_progress_state = 3
-                    game_bg.show()
-        if event.type == pygame.MOUSEBUTTONUP:
-            if game_progress_state == 1:
-                game_progress_state == 2
-                print(1)
-                print(game_progress_state)
+                    okbt_press_state += 1
+                    if okbt_press_state >= 2:
+                        game_progress_state = 3
+                        game_bg.show()
                 
 
 
