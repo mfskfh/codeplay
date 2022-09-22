@@ -25,7 +25,10 @@ choose_things = []
 # 0 : 인트로 , 1 : 인트로 스토리 , 2 : 튜토리얼 ,3 : 게임진행 , 4 : 하루 끝 , 5 : 게임 끝
 game_progress_state = 0
 okbt_press_state = 0
+odtx_press_state = 0
 guest_presence_or_absence = 0
+order_text_check = 0
+odbar_food_yPos = 0
 
 def food_all_alpha(a):
         food_01.img.set_alpha(a) 
@@ -138,69 +141,142 @@ guests_07.img.set_alpha(0)
 
 guests_img = [guests_01.img, guests_02.img, guests_03.img, guests_04.img, guests_05.img, guests_06.img, guests_07.img]
 
-#식재료(랜덤)
+#식재료(뽑기용)
 food_01 = imageload()
 food_01.put_img("project/source/food/cheese.png")
 food_01.change_size(150, 150)
 food_01.x = (screen_width / 2) - (food_01.img.get_size()[0] / 2)
 food_01.y = 0
-food_01.get_rect()
 
 food_02 = imageload()
 food_02.put_img("project/source/food/patty.png")
 food_02.change_size(150, 150)
 food_02.x = (screen_width / 2) - (food_02.img.get_size()[0] / 2)
 food_02.y = 0
-food_02.get_rect()
 
 food_03 = imageload()
 food_03.put_img("project/source/food/chicken.png")
 food_03.change_size(150, 150)
 food_03.x = (screen_width / 2) - (food_03.img.get_size()[0] / 2)
 food_03.y = 0
-food_03.get_rect()
 
 food_04 = imageload()
 food_04.put_img("project/source/food/shirip.png")
 food_04.change_size(150, 150)
 food_04.x = (screen_width / 2) - (food_04.img.get_size()[0] / 2)
 food_04.y = 0
-food_04.get_rect()
 
 # food_02 = imageload()
 # food_02.put_img("project/source/food/patty.png")
 # food_02.change_size(150, 150)
 # food_02.x = (screen_width / 2) - (food_02.img.get_size()[0] / 2)
 # food_02.y = 0
-# food_02.get_rect()
 
 food_06 = imageload()
 food_06.put_img("project/source/food/lettuce.png")
 food_06.change_size(150, 150)
 food_06.x = (screen_width / 2) - (food_06.img.get_size()[0] / 2)
 food_06.y = 0
-food_06.get_rect()
 
 food_07 = imageload()
 food_07.put_img("project/source/food/tomato.png")
 food_07.change_size(150, 150)
 food_07.x = (screen_width / 2) - (food_07.img.get_size()[0] / 2)
 food_07.y = 0
-food_07.get_rect()
 
 food_08 = imageload()
 food_08.put_img("project/source/food/onion.png")
 food_08.change_size(150, 150)
 food_08.x = (screen_width / 2) - (food_08.img.get_size()[0] / 2)
 food_08.y = 0
-food_08.get_rect()
 
 food_09 = imageload()
 food_09.put_img("project/source/food/pickle.png")
 food_09.change_size(150, 150)
 food_09.x = (screen_width / 2) - (food_09.img.get_size()[0] / 2)
 food_09.y = 0
-food_09.get_rect()
+
+#식재료(쌓는용)
+
+bread_bottom = imageload()
+bread_bottom.put_img("project/source/food/bread_bottom.png")
+bread_bottom.change_size(200, 200)
+bread_bottom.x = screen_width / 2 - 105
+bread_bottom.y = 285
+
+bread_top = imageload()
+bread_top.put_img("project/source/food/bread_top.png")
+bread_top.change_size(200 , 200)
+bread_top.x = screen_width / 2 - 105
+bread_top.y = 285
+
+#식재료(주문내용)
+
+bread_bottom_odbar = imageload()
+bread_bottom_odbar.put_img("project/source/food/bread_bottom.png")
+bread_bottom_odbar.change_size(100, 100)
+bread_bottom_odbar.x = screen_width - 100
+bread_bottom_odbar.y = 285
+
+bread_top_odbar = imageload()
+bread_top_odbar.put_img("project/source/food/bread_top.png")
+bread_top_odbar.change_size(100 , 100)
+bread_top_odbar.x = screen_width - 100
+bread_top_odbar.y = 285
+
+food_01_odbar = imageload()
+food_01_odbar.put_img("project/source/food/cheese.png")
+food_01_odbar.change_size(100 , 100)
+food_01_odbar.x = screen_width - 100
+food_01_odbar.y = 0
+
+food_02_odbar = imageload()
+food_02_odbar.put_img("project/source/food/patty.png")
+food_02_odbar.change_size(100 , 100)
+food_02_odbar.x = screen_width - 100
+food_02_odbar.y = 0
+
+food_03_odbar = imageload()
+food_03_odbar.put_img("project/source/food/chicken.png")
+food_03_odbar.change_size(100 , 100)
+food_03_odbar.x = screen_width - 100
+food_03_odbar.y = 0
+
+food_04_odbar = imageload()
+food_04_odbar.put_img("project/source/food/shirip.png")
+food_04_odbar.change_size(100 , 100)
+food_04_odbar.x = screen_width - 100
+food_04_odbar.y = 0
+
+# food_05_odbar = imageload()
+# food_05_odbar.put_img("project/source/food/shirip.png")
+# food_05_odbar.change_size(100 , 100)
+# food_05_odbar.x = screen_width - 100
+# food_05_odbar.y = 0
+
+food_06_odbar = imageload()
+food_06_odbar.put_img("project/source/food/lettuce.png")
+food_06_odbar.change_size(100 , 100)
+food_06_odbar.x = screen_width - 100
+food_06_odbar.y = 0
+
+food_07_odbar = imageload()
+food_07_odbar.put_img("project/source/food/tomato.png")
+food_07_odbar.change_size(100 , 100)
+food_07_odbar.x = screen_width - 100
+food_07_odbar.y = 0
+
+food_08_odbar = imageload()
+food_08_odbar.put_img("project/source/food/onion.png")
+food_08_odbar.change_size(100 , 100)
+food_08_odbar.x = screen_width - 100
+food_08_odbar.y = 0
+
+food_09_odbar = imageload()
+food_09_odbar.put_img("project/source/food/pickle.png")
+food_09_odbar.change_size(100 , 100)
+food_09_odbar.x = screen_width - 100
+food_09_odbar.y = 0
 
 #UI
 start_button = imageload()
@@ -216,6 +292,14 @@ ok_button.change_size(180, 60)
 ok_button.x = screen_width - ok_button.img.get_size()[0] - 10
 ok_button.y = screen_height - ok_button.img.get_size()[1] - 10
 ok_button.get_rect()
+
+# odtx = order text
+odtx_button = imageload()
+odtx_button.put_img("project/source/ui/okbt.png")
+odtx_button.change_size(90, 30)
+odtx_button.x = 430
+odtx_button.y = screen_height - 50
+odtx_button.get_rect()
 
 menu_bar = imageload()
 menu_bar.put_img("project/source/ui/menu_bar.png")
@@ -256,12 +340,137 @@ while running:
                         guest_presence_or_absence = 1
                         order_text.show()
                         menu_bar.show()
+                        odtx_button.show()
+            if odtx_button.rect.collidepoint(event.pos) == True:
+                if game_progress_state == 3:
+                    odtx_press_state += 1
+                    if odtx_press_state >= 2:
+                        order_text_check = 1
+                        game_bg.show()
+                        menu_bar.show()
+                        bread_bottom.show()
+                        print(order_menu)
+                        if len(order_menu[0]) == 3:
+                            bread_bottom_odbar.y = 285
+                            bread_bottom_odbar.show()
+                            odbar_food_yPos = bread_bottom_odbar.y - 150
+                            for i in range(0, 3):
+                                if order_menu[0][i] == 1:
+                                    food_01_odbar.y = odbar_food_yPos
+                                    food_01_odbar.show()
+                                elif order_menu[0][i] == 2:
+                                    food_02_odbar.y = odbar_food_yPos
+                                    food_02_odbar.show()
+                                elif order_menu[0][i] == 3:
+                                    food_03_odbar.y = odbar_food_yPos
+                                    food_03_odbar.show()
+                                elif order_menu[0][i] == 4:
+                                    food_04_odbar.y = odbar_food_yPos
+                                    food_04_odbar.show()
+                                # elif order_menu[0][i] == 5:
+                                #     food_05_odbar.y = odbar_food_yPos
+                                #     food_05_odbar.show()
+                                elif order_menu[0][i] == 6:
+                                    food_06_odbar.y = odbar_food_yPos
+                                    food_06_odbar.show()
+                                elif order_menu[0][i] == 7:
+                                    food_07_odbar.y = odbar_food_yPos
+                                    food_07_odbar.show()
+                                elif order_menu[0][i] == 8:
+                                    food_08_odbar.y = odbar_food_yPos
+                                    food_08_odbar.show()
+                                elif order_menu[0][i] == 9:
+                                    food_09_odbar.y = odbar_food_yPos
+                                    food_09_odbar.show()
+                                odbar_food_yPos += 50
+                            odbar_food_yPos -= 200
+                            bread_top_odbar.y = odbar_food_yPos
+                            bread_top_odbar.show()
+                        if len(order_menu[0]) == 4:
+                            bread_bottom_odbar.y = 310
+                            bread_bottom_odbar.show()
+                            odbar_food_yPos = bread_bottom_odbar.y - 200
+                            for i in range(0, 4):
+                                if order_menu[0][i] == 1:
+                                    food_01_odbar.y = odbar_food_yPos
+                                    food_01_odbar.show()
+                                elif order_menu[0][i] == 2:
+                                    food_02_odbar.y = odbar_food_yPos
+                                    food_02_odbar.show()
+                                elif order_menu[0][i] == 3:
+                                    food_03_odbar.y = odbar_food_yPos
+                                    food_03_odbar.show()
+                                elif order_menu[0][i] == 4:
+                                    food_04_odbar.y = odbar_food_yPos
+                                    food_04_odbar.show()
+                                # elif order_menu[0][i] == 5:
+                                #     food_05_odbar.y = odbar_food_yPos
+                                #     food_05_odbar.show()
+                                elif order_menu[0][i] == 6:
+                                    food_06_odbar.y = odbar_food_yPos
+                                    food_06_odbar.show()
+                                elif order_menu[0][i] == 7:
+                                    food_07_odbar.y = odbar_food_yPos
+                                    food_07_odbar.show()
+                                elif order_menu[0][i] == 8:
+                                    food_08_odbar.y = odbar_food_yPos
+                                    food_08_odbar.show()
+                                elif order_menu[0][i] == 9:
+                                    food_09_odbar.y = odbar_food_yPos
+                                    food_09_odbar.show()
+                                odbar_food_yPos += 50
+                            odbar_food_yPos -= 250
+                            bread_top_odbar.y = odbar_food_yPos
+                            bread_top_odbar.show()
+                        if len(order_menu[0]) == 5:
+                            bread_bottom_odbar.y = 335
+                            bread_bottom_odbar.show()
+                            odbar_food_yPos = bread_bottom_odbar.y - 250
+                            for i in range(0, 5):
+                                if order_menu[0][i] == 1:
+                                    food_01_odbar.y = odbar_food_yPos
+                                    food_01_odbar.show()
+                                elif order_menu[0][i] == 2:
+                                    food_02_odbar.y = odbar_food_yPos
+                                    food_02_odbar.show()
+                                elif order_menu[0][i] == 3:
+                                    food_03_odbar.y = odbar_food_yPos
+                                    food_03_odbar.show()
+                                elif order_menu[0][i] == 4:
+                                    food_04_odbar.y = odbar_food_yPos
+                                    food_04_odbar.show()
+                                # elif order_menu[0][i] == 5:
+                                #     food_05_odbar.y = odbar_food_yPos
+                                #     food_05_odbar.show()
+                                elif order_menu[0][i] == 6:
+                                    food_06_odbar.y = odbar_food_yPos
+                                    food_06_odbar.show()
+                                elif order_menu[0][i] == 7:
+                                    food_07_odbar.y = odbar_food_yPos
+                                    food_07_odbar.show()
+                                elif order_menu[0][i] == 8:
+                                    food_08_odbar.y = odbar_food_yPos
+                                    food_08_odbar.show()
+                                elif order_menu[0][i] == 9:
+                                    food_09_odbar.y = odbar_food_yPos
+                                    food_09_odbar.show()
+                                odbar_food_yPos += 50
+                            odbar_food_yPos -= 300
+                            bread_top_odbar.y = odbar_food_yPos
+                            bread_top_odbar.show()
+                
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_f:
                 random_things = random.randint(1, 9)
             if event.key == pygame.K_e:
-                guest_presence_or_absence = 1
-                guest_all_alpha(0)
+                if order_text_check == 1:
+                    guest_presence_or_absence = 1
+                    game_bg.show()
+                    menu_bar.show()
+                    order_text.show()
+                    odtx_button.show()
+                    guest_all_alpha(0)
+                    order_text_check = 0
     
     if game_progress_state == 3:
         
@@ -273,7 +482,6 @@ while running:
 
         choose_things = []
 
-
         order_guest = guests[random.randint(0, len(guests)-1)]
         if order_guest == normal_guest:
             order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
@@ -282,13 +490,22 @@ while running:
         elif order_guest == weird_guest:
             order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
 
+ 
+
         while guest_presence_or_absence == 1:
             order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
             order_guest_img.set_alpha(255)
-            for i in range(0, 7):
-                print(guests_img[i].get_alpha())
 
-            print("========")
+            order_guest = guests[random.randint(0, len(guests)-1)]
+            if order_guest == normal_guest:
+                order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
+            elif order_guest == fat_guest:
+                order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
+            elif order_guest == weird_guest:
+                order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
+
+            print(order_menu)
+
             guest_presence_or_absence = 0
 
     
@@ -367,35 +584,32 @@ while running:
     # print("----------------------")
 
 
-                
+    food_01.show()
+    food_02.show()
+    food_03.show()
+    food_04.show()
+    # food_05.show()
+    food_06.show()
+    food_07.show()
+    food_08.show()
+    food_09.show()
+    food_all_alpha(0)
+
+    guests_01.show()
+    guests_02.show()
+    guests_03.show()
+    guests_04.show()
+    guests_05.show()
+    guests_06.show()
+    guests_07.show()
 
 
-    
 
 
     if game_progress_state == 0:
         intro_bg.show()
         start_button.show()
-
-        food_01.show()
-        food_02.show()
-        food_03.show()
-        food_04.show()
-        # food_05.show()
-        food_06.show()
-        food_07.show()
-        food_08.show()
-        food_09.show()
-        food_all_alpha(0)
-
-        guests_01.show()
-        guests_02.show()
-        guests_03.show()
-        guests_04.show()
-        guests_05.show()
-        guests_06.show()
-        guests_07.show()
-        guest_all_alpha(0)
+    
         # for i in range(0, 7):
         #     print(guests_img[i].get_alpha())
         # print("========")
