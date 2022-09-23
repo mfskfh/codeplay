@@ -50,6 +50,44 @@ def guest_all_alpha(a):
         guests_06.img.set_alpha(a) 
         guests_07.img.set_alpha(a) 
 
+def order_menu_show(hle):
+    if len(order_menu[0]) == hle:
+        bread_bottom_odbar.y = 285 + 25(hle - 3)
+        bread_bottom_odbar.show()
+        odbar_food_yPos = bread_bottom_odbar.y - 150 + 50(hle - 3)
+        for i in range(0, hle):
+            if order_menu[0][i] == 1:
+                food_01_odbar.y = odbar_food_yPos
+                food_01_odbar.show()
+            elif order_menu[0][i] == 2:
+                food_02_odbar.y = odbar_food_yPos
+                food_02_odbar.show()
+            elif order_menu[0][i] == 3:
+                food_03_odbar.y = odbar_food_yPos
+                food_03_odbar.show()
+            elif order_menu[0][i] == 4:
+                food_04_odbar.y = odbar_food_yPos
+                food_04_odbar.show()
+            # elif order_menu[0][i] == 5:
+            #     food_05_odbar.y = odbar_food_yPos
+            #     food_05_odbar.show()
+            elif order_menu[0][i] == 6:
+                food_06_odbar.y = odbar_food_yPos
+                food_06_odbar.show()
+            elif order_menu[0][i] == 7:
+                food_07_odbar.y = odbar_food_yPos
+                food_07_odbar.show()
+            elif order_menu[0][i] == 8:
+                food_08_odbar.y = odbar_food_yPos
+                food_08_odbar.show()
+            elif order_menu[0][i] == 9:
+                food_09_odbar.y = odbar_food_yPos
+                food_09_odbar.show()
+            odbar_food_yPos += 50
+        odbar_food_yPos -= 200 + 50(hle - 3)
+        bread_top_odbar.y = odbar_food_yPos
+        bread_top_odbar.show()
+
 
 
 class imageload:
@@ -350,115 +388,13 @@ while running:
                         menu_bar.show()
                         bread_bottom.show()
                         print(order_menu)
-                        if len(order_menu[0]) == 3:
-                            bread_bottom_odbar.y = 285
-                            bread_bottom_odbar.show()
-                            odbar_food_yPos = bread_bottom_odbar.y - 150
-                            for i in range(0, 3):
-                                if order_menu[0][i] == 1:
-                                    food_01_odbar.y = odbar_food_yPos
-                                    food_01_odbar.show()
-                                elif order_menu[0][i] == 2:
-                                    food_02_odbar.y = odbar_food_yPos
-                                    food_02_odbar.show()
-                                elif order_menu[0][i] == 3:
-                                    food_03_odbar.y = odbar_food_yPos
-                                    food_03_odbar.show()
-                                elif order_menu[0][i] == 4:
-                                    food_04_odbar.y = odbar_food_yPos
-                                    food_04_odbar.show()
-                                # elif order_menu[0][i] == 5:
-                                #     food_05_odbar.y = odbar_food_yPos
-                                #     food_05_odbar.show()
-                                elif order_menu[0][i] == 6:
-                                    food_06_odbar.y = odbar_food_yPos
-                                    food_06_odbar.show()
-                                elif order_menu[0][i] == 7:
-                                    food_07_odbar.y = odbar_food_yPos
-                                    food_07_odbar.show()
-                                elif order_menu[0][i] == 8:
-                                    food_08_odbar.y = odbar_food_yPos
-                                    food_08_odbar.show()
-                                elif order_menu[0][i] == 9:
-                                    food_09_odbar.y = odbar_food_yPos
-                                    food_09_odbar.show()
-                                odbar_food_yPos += 50
-                            odbar_food_yPos -= 200
-                            bread_top_odbar.y = odbar_food_yPos
-                            bread_top_odbar.show()
-                        if len(order_menu[0]) == 4:
-                            bread_bottom_odbar.y = 310
-                            bread_bottom_odbar.show()
-                            odbar_food_yPos = bread_bottom_odbar.y - 200
-                            for i in range(0, 4):
-                                if order_menu[0][i] == 1:
-                                    food_01_odbar.y = odbar_food_yPos
-                                    food_01_odbar.show()
-                                elif order_menu[0][i] == 2:
-                                    food_02_odbar.y = odbar_food_yPos
-                                    food_02_odbar.show()
-                                elif order_menu[0][i] == 3:
-                                    food_03_odbar.y = odbar_food_yPos
-                                    food_03_odbar.show()
-                                elif order_menu[0][i] == 4:
-                                    food_04_odbar.y = odbar_food_yPos
-                                    food_04_odbar.show()
-                                # elif order_menu[0][i] == 5:
-                                #     food_05_odbar.y = odbar_food_yPos
-                                #     food_05_odbar.show()
-                                elif order_menu[0][i] == 6:
-                                    food_06_odbar.y = odbar_food_yPos
-                                    food_06_odbar.show()
-                                elif order_menu[0][i] == 7:
-                                    food_07_odbar.y = odbar_food_yPos
-                                    food_07_odbar.show()
-                                elif order_menu[0][i] == 8:
-                                    food_08_odbar.y = odbar_food_yPos
-                                    food_08_odbar.show()
-                                elif order_menu[0][i] == 9:
-                                    food_09_odbar.y = odbar_food_yPos
-                                    food_09_odbar.show()
-                                odbar_food_yPos += 50
-                            odbar_food_yPos -= 250
-                            bread_top_odbar.y = odbar_food_yPos
-                            bread_top_odbar.show()
-                        if len(order_menu[0]) == 5:
-                            bread_bottom_odbar.y = 335
-                            bread_bottom_odbar.show()
-                            odbar_food_yPos = bread_bottom_odbar.y - 250
-                            for i in range(0, 5):
-                                if order_menu[0][i] == 1:
-                                    food_01_odbar.y = odbar_food_yPos
-                                    food_01_odbar.show()
-                                elif order_menu[0][i] == 2:
-                                    food_02_odbar.y = odbar_food_yPos
-                                    food_02_odbar.show()
-                                elif order_menu[0][i] == 3:
-                                    food_03_odbar.y = odbar_food_yPos
-                                    food_03_odbar.show()
-                                elif order_menu[0][i] == 4:
-                                    food_04_odbar.y = odbar_food_yPos
-                                    food_04_odbar.show()
-                                # elif order_menu[0][i] == 5:
-                                #     food_05_odbar.y = odbar_food_yPos
-                                #     food_05_odbar.show()
-                                elif order_menu[0][i] == 6:
-                                    food_06_odbar.y = odbar_food_yPos
-                                    food_06_odbar.show()
-                                elif order_menu[0][i] == 7:
-                                    food_07_odbar.y = odbar_food_yPos
-                                    food_07_odbar.show()
-                                elif order_menu[0][i] == 8:
-                                    food_08_odbar.y = odbar_food_yPos
-                                    food_08_odbar.show()
-                                elif order_menu[0][i] == 9:
-                                    food_09_odbar.y = odbar_food_yPos
-                                    food_09_odbar.show()
-                                odbar_food_yPos += 50
-                            odbar_food_yPos -= 300
-                            bread_top_odbar.y = odbar_food_yPos
-                            bread_top_odbar.show()
-                
+                        
+                        order_menu_show(3)
+                        order_menu_show(4)
+                        order_menu_show(5)
+                        order_menu_show(7)
+                        order_menu_show(9)
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_f:
                 random_things = random.randint(1, 9)
@@ -504,7 +440,7 @@ while running:
             elif order_guest == weird_guest:
                 order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
 
-            print(order_menu)
+            # print(order_menu)
 
             guest_presence_or_absence = 0
 
