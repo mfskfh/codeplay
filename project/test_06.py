@@ -20,6 +20,7 @@ passed_guest = 0
 order_guest = 0
 order_menu = 0
 random_things = 0
+hamtop_yPos = 285
 choose_things = []
 
 # 0 : 인트로 , 1 : 인트로 스토리 , 2 : 튜토리얼 ,3 : 게임진행 , 4 : 하루 끝 , 5 : 게임 끝
@@ -29,17 +30,18 @@ odtx_press_state = 0
 guest_presence_or_absence = 0
 order_text_check = 0
 odbar_food_yPos = 0
+first_guest = 1
 
-def food_all_alpha(a):
-        food_01.img.set_alpha(a) 
-        food_02.img.set_alpha(a)
-        food_03.img.set_alpha(a) 
-        food_04.img.set_alpha(a) 
-        # food_05.img.set_alpha(a) 
-        food_06.img.set_alpha(a) 
-        food_07.img.set_alpha(a) 
-        food_08.img.set_alpha(a) 
-        food_09.img.set_alpha(a) 
+# def food_all_alpha(a):
+#         food_01.img.set_alpha(a) 
+#         food_02.img.set_alpha(a)
+#         food_03.img.set_alpha(a) 
+#         food_04.img.set_alpha(a) 
+#         # food_05.img.set_alpha(a) 
+#         food_06.img.set_alpha(a) 
+#         food_07.img.set_alpha(a) 
+#         food_08.img.set_alpha(a) 
+#         food_09.img.set_alpha(a) 
 
 def guest_all_alpha(a):
         guests_01.img.set_alpha(a) 
@@ -52,9 +54,9 @@ def guest_all_alpha(a):
 
 def order_menu_show(hle):
     if len(order_menu[0]) == hle:
-        bread_bottom_odbar.y = 285 + 25(hle - 3)
+        bread_bottom_odbar.y = 230 + (25 * (hle - 3))
         bread_bottom_odbar.show()
-        odbar_food_yPos = bread_bottom_odbar.y - 150 + 50(hle - 3)
+        odbar_food_yPos = bread_bottom_odbar.y - (105 + (35 * (hle - 3)))
         for i in range(0, hle):
             if order_menu[0][i] == 1:
                 food_01_odbar.y = odbar_food_yPos
@@ -83,8 +85,8 @@ def order_menu_show(hle):
             elif order_menu[0][i] == 9:
                 food_09_odbar.y = odbar_food_yPos
                 food_09_odbar.show()
-            odbar_food_yPos += 50
-        odbar_food_yPos -= 200 + 50(hle - 3)
+            odbar_food_yPos += 35
+        odbar_food_yPos -= 140 + (35 * (hle - 3))
         bread_top_odbar.y = odbar_food_yPos
         bread_top_odbar.show()
 
@@ -127,7 +129,6 @@ guests_01.change_size(300, 300)
 guests_01.x = (screen_width / 2) - (guests_01.img.get_size()[0] / 2)
 guests_01.y = 7
 guests_01.get_rect()
-guests_01.img.set_alpha(0)
 
 guests_02 = imageload()
 guests_02.put_img("project/source/guest/doyup.png")
@@ -135,7 +136,6 @@ guests_02.change_size(300, 300)
 guests_02.x = (screen_width / 2) - (guests_02.img.get_size()[0] / 2)
 guests_02.y = 7
 guests_02.get_rect()
-guests_02.img.set_alpha(0)
 
 guests_03 = imageload()
 guests_03.put_img("project/source/guest/jwoo.png")
@@ -143,7 +143,6 @@ guests_03.change_size(300, 300)
 guests_03.x = (screen_width / 2) - (guests_03.img.get_size()[0] / 2)
 guests_03.y = 7
 guests_03.get_rect()
-guests_03.img.set_alpha(0)
 
 guests_04 = imageload()
 guests_04.put_img("project/source/guest/jehyk.png")
@@ -151,7 +150,6 @@ guests_04.change_size(300, 300)
 guests_04.x = (screen_width / 2) - (guests_04.img.get_size()[0] / 2)
 guests_04.y = 7
 guests_04.get_rect()
-guests_04.img.set_alpha(0)
 
 guests_05 = imageload()
 guests_05.put_img("project/source/guest/mjae.png")
@@ -159,7 +157,6 @@ guests_05.change_size(300, 300)
 guests_05.x = (screen_width / 2) - (guests_05.img.get_size()[0] / 2)
 guests_05.y = 7
 guests_05.get_rect()
-guests_05.img.set_alpha(0)
 
 guests_06 = imageload()
 guests_06.put_img("project/source/guest/osu.png")
@@ -167,7 +164,6 @@ guests_06.change_size(300, 300)
 guests_06.x = (screen_width / 2) - (guests_06.img.get_size()[0] / 2)
 guests_06.y = 7
 guests_06.get_rect()
-guests_06.img.set_alpha(0)
 
 guests_07 = imageload()
 guests_07.put_img("project/source/guest/sech.png")
@@ -175,34 +171,33 @@ guests_07.change_size(300, 300)
 guests_07.x = (screen_width / 2) - (guests_07.img.get_size()[0] / 2)
 guests_07.y = 7
 guests_07.get_rect()
-guests_07.img.set_alpha(0)
 
-guests_img = [guests_01.img, guests_02.img, guests_03.img, guests_04.img, guests_05.img, guests_06.img, guests_07.img]
+guests_img = [guests_01, guests_02, guests_03, guests_04, guests_05, guests_06, guests_07]
 
 #식재료(뽑기용)
-food_01 = imageload()
-food_01.put_img("project/source/food/cheese.png")
-food_01.change_size(150, 150)
-food_01.x = (screen_width / 2) - (food_01.img.get_size()[0] / 2)
-food_01.y = 0
+food_01_ran = imageload()
+food_01_ran.put_img("project/source/food/cheese.png")
+food_01_ran.change_size(150, 150)
+food_01_ran.x = (screen_width / 2) - (food_01_ran.img.get_size()[0] / 2)
+food_01_ran.y = 0
 
-food_02 = imageload()
-food_02.put_img("project/source/food/patty.png")
-food_02.change_size(150, 150)
-food_02.x = (screen_width / 2) - (food_02.img.get_size()[0] / 2)
-food_02.y = 0
+food_02_ran = imageload()
+food_02_ran.put_img("project/source/food/patty.png")
+food_02_ran.change_size(150, 150)
+food_02_ran.x = (screen_width / 2) - (food_02_ran.img.get_size()[0] / 2)
+food_02_ran.y = 0
 
-food_03 = imageload()
-food_03.put_img("project/source/food/chicken.png")
-food_03.change_size(150, 150)
-food_03.x = (screen_width / 2) - (food_03.img.get_size()[0] / 2)
-food_03.y = 0
+food_03_ran = imageload()
+food_03_ran.put_img("project/source/food/chicken.png")
+food_03_ran.change_size(150, 150)
+food_03_ran.x = (screen_width / 2) - (food_03_ran.img.get_size()[0] / 2)
+food_03_ran.y = 0
 
-food_04 = imageload()
-food_04.put_img("project/source/food/shirip.png")
-food_04.change_size(150, 150)
-food_04.x = (screen_width / 2) - (food_04.img.get_size()[0] / 2)
-food_04.y = 0
+food_04_ran = imageload()
+food_04_ran.put_img("project/source/food/shirip.png")
+food_04_ran.change_size(150, 150)
+food_04_ran.x = (screen_width / 2) - (food_04_ran.img.get_size()[0] / 2)
+food_04_ran.y = 0
 
 # food_02 = imageload()
 # food_02.put_img("project/source/food/patty.png")
@@ -210,29 +205,31 @@ food_04.y = 0
 # food_02.x = (screen_width / 2) - (food_02.img.get_size()[0] / 2)
 # food_02.y = 0
 
-food_06 = imageload()
-food_06.put_img("project/source/food/lettuce.png")
-food_06.change_size(150, 150)
-food_06.x = (screen_width / 2) - (food_06.img.get_size()[0] / 2)
-food_06.y = 0
+food_06_ran = imageload()
+food_06_ran.put_img("project/source/food/lettuce.png")
+food_06_ran.change_size(150, 150)
+food_06_ran.x = (screen_width / 2) - (food_06_ran.img.get_size()[0] / 2)
+food_06_rany = 0
 
-food_07 = imageload()
-food_07.put_img("project/source/food/tomato.png")
-food_07.change_size(150, 150)
-food_07.x = (screen_width / 2) - (food_07.img.get_size()[0] / 2)
-food_07.y = 0
+food_07_ran = imageload()
+food_07_ran.put_img("project/source/food/tomato.png")
+food_07_ran.change_size(150, 150)
+food_07_ran.x = (screen_width / 2) - (food_07_ran.img.get_size()[0] / 2)
+food_07_ran.y = 0
 
-food_08 = imageload()
-food_08.put_img("project/source/food/onion.png")
-food_08.change_size(150, 150)
-food_08.x = (screen_width / 2) - (food_08.img.get_size()[0] / 2)
-food_08.y = 0
+food_08_ran = imageload()
+food_08_ran.put_img("project/source/food/onion.png")
+food_08_ran.change_size(150, 150)
+food_08_ran.x = (screen_width / 2) - (food_08_ran.img.get_size()[0] / 2)
+food_08_ran.y = 0
 
-food_09 = imageload()
-food_09.put_img("project/source/food/pickle.png")
-food_09.change_size(150, 150)
-food_09.x = (screen_width / 2) - (food_09.img.get_size()[0] / 2)
-food_09.y = 0
+food_09_ran = imageload()
+food_09_ran.put_img("project/source/food/pickle.png")
+food_09_ran.change_size(150, 150)
+food_09_ran.x = (screen_width / 2) - (food_09_ran.img.get_size()[0] / 2)
+food_09_ran.y = 0
+
+foodran_img = [food_01_ran, food_02_ran, food_03_ran, food_04_ran, food_06_ran, food_07_ran, food_08_ran, food_09_ran]
 
 #식재료(쌓는용)
 
@@ -240,13 +237,69 @@ bread_bottom = imageload()
 bread_bottom.put_img("project/source/food/bread_bottom.png")
 bread_bottom.change_size(200, 200)
 bread_bottom.x = screen_width / 2 - 105
-bread_bottom.y = 285
+bread_bottom.y = hamtop_yPos
 
 bread_top = imageload()
 bread_top.put_img("project/source/food/bread_top.png")
 bread_top.change_size(200 , 200)
 bread_top.x = screen_width / 2 - 105
-bread_top.y = 285
+bread_top.y = hamtop_yPos
+
+food_01 = imageload()
+food_01.put_img("project/source/food/cheese.png")
+food_01.change_size(200 , 200)
+food_01.x = screen_width / 2 - 105
+food_01.y = hamtop_yPos
+
+food_02 = imageload()
+food_02.put_img("project/source/food/patty.png")
+food_02.change_size(200 , 200)
+food_02.x = screen_width / 2 - 105
+food_02.y = hamtop_yPos
+
+food_03 = imageload()
+food_03.put_img("project/source/food/chicken.png")
+food_03.change_size(200 , 200)
+food_03.x = screen_width / 2 - 105
+food_03.y = hamtop_yPos
+
+food_04 = imageload()
+food_04.put_img("project/source/food/shirip.png")
+food_04.change_size(200 , 200)
+food_04.x = screen_width / 2 - 105
+food_04.y = hamtop_yPos
+
+food_05 = imageload()
+food_05.put_img("project/source/food/shirip.png")
+food_05.change_size(200 , 200)
+food_05.x = screen_width / 2 - 105
+food_05.y = hamtop_yPos
+
+food_06 = imageload()
+food_06.put_img("project/source/food/lettuce.png")
+food_06.change_size(200 , 200)
+food_06.x = screen_width / 2 - 105
+food_06.y = hamtop_yPos
+
+food_07 = imageload()
+food_07.put_img("project/source/food/tomato.png")
+food_07.change_size(200 , 200)
+food_07.x = screen_width / 2 - 105
+food_07.y = hamtop_yPos
+
+food_08 = imageload()
+food_08.put_img("project/source/food/onion.png")
+food_08.change_size(200 , 200)
+food_08.x = screen_width / 2 - 105
+food_08.y = hamtop_yPos
+
+food_09 = imageload()
+food_09.put_img("project/source/food/pickle.png")
+food_09.change_size(200 , 200)
+food_09.x = screen_width / 2 - 105
+food_09.y = hamtop_yPos
+
+foodstack_img = [food_01, food_02, food_03, food_04, food_06, food_07, food_08, food_09]
 
 #식재료(주문내용)
 
@@ -351,12 +404,19 @@ order_text.change_size(520, 150)
 order_text.x = 10
 order_text.y = screen_height - 160
 
+foodbg = imageload()
+foodbg.put_img("project/source/rdfoodbg.png")
+foodbg.change_size(200, 120)
+foodbg.x = screen_width / 2 - 65
+foodbg.y = 15
+
 running = True
 
 while running:
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            running = False   
         
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if start_button.rect.collidepoint(event.pos) == True:
@@ -387,6 +447,13 @@ while running:
                         game_bg.show()
                         menu_bar.show()
                         bread_bottom.show()
+                        order_guest_img.show()
+                        random_things = random.randint(1, len(foodran_img))
+                        ranfood_img = foodran_img[random_things - 1]
+                        stackfood_img = foodstack_img[random_things - 1]
+                        foodbg.show()
+                        ranfood_img.show()
+                        
                         print(order_menu)
                         
                         order_menu_show(3)
@@ -396,17 +463,42 @@ while running:
                         order_menu_show(9)
 
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_f:
-                random_things = random.randint(1, 9)
             if event.key == pygame.K_e:
                 if order_text_check == 1:
+                    first_guest = 0
+                    passed_guest += 1
                     guest_presence_or_absence = 1
                     game_bg.show()
                     menu_bar.show()
                     order_text.show()
                     odtx_button.show()
-                    guest_all_alpha(0)
                     order_text_check = 0
+
+                    order_guest = guests[random.randint(0, len(guests)-1)]
+                    if order_guest == normal_guest:
+                        order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
+                    elif order_guest == fat_guest:
+                        order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
+                    elif order_guest == weird_guest:
+                        order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
+                    
+                    order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
+                    order_guest_img.show()
+
+            if event.key == pygame.K_f:
+                random_things = random.randint(1, len(foodran_img))
+                ranfood_img = foodran_img[random_things - 1]
+                stackfood_img = foodstack_img[random_things - 1]
+                foodbg.show()
+                ranfood_img.show()
+
+            if event.key == pygame.K_SPACE:
+                hamtop_yPos += 20
+                print(hamtop_yPos)
+                choose_things.append(random_things)
+                print(choose_things)
+                stackfood_img.show()
+                
     
     if game_progress_state == 3:
         
@@ -428,9 +520,10 @@ while running:
 
  
 
-        while guest_presence_or_absence == 1:
-            order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
-            order_guest_img.set_alpha(255)
+        if guest_presence_or_absence == 1:
+            if first_guest == 1:
+                order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
+                order_guest_img.show() 
 
             order_guest = guests[random.randint(0, len(guests)-1)]
             if order_guest == normal_guest:
@@ -440,12 +533,14 @@ while running:
             elif order_guest == weird_guest:
                 order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
 
-            # print(order_menu)
-
             guest_presence_or_absence = 0
+            
 
     
-
+        # if passed_guest >= 10:
+        #     print(1)
+        #     game_progress_state = 4
+            # pygame.event
         # print("{0}버거 주세요".format(order_menu[2]))
         # print(order_menu[0])
 
@@ -520,24 +615,24 @@ while running:
     # print("----------------------")
 
 
-    food_01.show()
-    food_02.show()
-    food_03.show()
-    food_04.show()
-    # food_05.show()
-    food_06.show()
-    food_07.show()
-    food_08.show()
-    food_09.show()
-    food_all_alpha(0)
+    # food_01.show()
+    # food_02.show()
+    # food_03.show()
+    # food_04.show()
+    # # food_05.show()
+    # food_06.show()
+    # food_07.show()
+    # food_08.show()
+    # food_09.show()
+    # food_all_alpha(0)
 
-    guests_01.show()
-    guests_02.show()
-    guests_03.show()
-    guests_04.show()
-    guests_05.show()
-    guests_06.show()
-    guests_07.show()
+    # guests_01.show()
+    # guests_02.show()
+    # guests_03.show()
+    # guests_04.show()
+    # guests_05.show()
+    # guests_06.show()
+    # guests_07.show()
 
 
 
