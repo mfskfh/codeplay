@@ -417,13 +417,13 @@ menu_bar.x = screen_width - menu_bar.img.get_size()[0]
 menu_bar.y = 0
 
 order_text = imageload()
-order_text.put_img("project/source/ui/menu_bar.png")
+order_text.put_img("project/source/ui/order_text_bar.png")
 order_text.change_size(520, 150)
 order_text.x = 10
 order_text.y = screen_height - 160
 
 foodbg = imageload()
-foodbg.put_img("project/source/rdfoodbg.png")
+foodbg.put_img("project/source/ui/rdfoodbg.png")
 foodbg.change_size(200, 120)
 foodbg.x = screen_width / 2 - 65
 foodbg.y = 15
@@ -461,7 +461,7 @@ while running:
             if odtx_button.rect.collidepoint(event.pos) == True:
                 if game_progress_state == 3:
                     odtx_press_state += 1
-                    if odtx_press_state >= 2:
+                    if odtx_press_state >= 2 and order_text_check == 0:
                         order_text_check = 1
                         game_bg.show()
                         menu_bar.show()
