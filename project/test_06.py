@@ -43,14 +43,32 @@ first_guest = 1
 #         food_08.img.set_alpha(a) 
 #         food_09.img.set_alpha(a) 
 
+def hamtop_yPos_re():
+    bread_top.y = hamtop_yPos
+    food_01.y = hamtop_yPos
+    food_02.y = hamtop_yPos
+    food_03.y = hamtop_yPos
+    food_04.y = hamtop_yPos
+    food_06.y = hamtop_yPos
+    food_07.y = hamtop_yPos
+    food_08.y = hamtop_yPos
+    food_09.y = hamtop_yPos
+
 def guest_all_alpha(a):
-        guests_01.img.set_alpha(a) 
-        guests_02.img.set_alpha(a)
-        guests_03.img.set_alpha(a) 
-        guests_04.img.set_alpha(a) 
-        guests_05.img.set_alpha(a)
-        guests_06.img.set_alpha(a) 
-        guests_07.img.set_alpha(a) 
+    guests_01.img.set_alpha(a) 
+    guests_02.img.set_alpha(a)
+    guests_03.img.set_alpha(a) 
+    guests_04.img.set_alpha(a) 
+    guests_05.img.set_alpha(a)
+    guests_06.img.set_alpha(a) 
+    guests_07.img.set_alpha(a) 
+
+def wait_time(a):
+    wait_first_time = pygame.time.get_ticks() + a
+    while wait_first_time > pygame.time.get_ticks():
+        continue
+    return True
+
 
 def order_menu_show(hle):
     if len(order_menu[0]) == hle:
@@ -435,6 +453,7 @@ while running:
                         game_bg.show()
                         pygame.display.update()
                         game_progress_state = 3
+                        pygame.time.delay(2000)
                         guest_presence_or_absence = 1
                         order_text.show()
                         menu_bar.show()
@@ -465,10 +484,17 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_e:
                 if order_text_check == 1:
+                    hamtop_yPos -= 10
+                    hamtop_yPos_re()
+                    bread_top.show()
+                    pygame.display.update()
+                    pygame.time.delay(1000)
                     first_guest = 0
                     passed_guest += 1
                     guest_presence_or_absence = 1
                     game_bg.show()
+                    pygame.display.update()
+                    pygame.time.delay(2000)
                     menu_bar.show()
                     order_text.show()
                     odtx_button.show()
@@ -484,31 +510,29 @@ while running:
                     
                     order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
                     order_guest_img.show()
+                    
+                    hamtop_yPos = 285
 
             if event.key == pygame.K_f:
-                random_things = random.randint(1, len(foodran_img))
-                ranfood_img = foodran_img[random_things - 1]
-                stackfood_img = foodstack_img[random_things - 1]
-                foodbg.show()
-                ranfood_img.show()
+                if game_progress_state == 3 and order_text_check == 1: 
+                    random_things = random.randint(1, len(foodran_img))
+                    ranfood_img = foodran_img[random_things - 1]
+                    stackfood_img = foodstack_img[random_things - 1]
+                    foodbg.show()
+                    ranfood_img.show()
 
             if event.key == pygame.K_SPACE:
-                hamtop_yPos += 20
-                print(hamtop_yPos)
-                choose_things.append(random_things)
-                print(choose_things)
-                stackfood_img.show()
+                if game_progress_state == 3 and order_text_check == 1:
+                    hamtop_yPos -= 10
+                    hamtop_yPos_re()
+                    choose_things.append(random_things)
+                    print(choose_things)
+                    stackfood_img.show()
                 
     
     if game_progress_state == 3:
         
     #     while passed_guest < satisfaction:
-        order_guest = 0
-        order_menu = 0
-        random_things = 0
-        press_key = 0
-
-        choose_things = []
 
         order_guest = guests[random.randint(0, len(guests)-1)]
         if order_guest == normal_guest:
