@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from cProfile import run
 import pygame
 import random
+# from bridge import day_end
 from data_01 import *
+from text_data import daily_report
 
 pygame.init()
 
@@ -10,6 +13,8 @@ pygame.init()
 screen_width = 640
 screen_height = 480
 screen = pygame.display.set_mode((screen_width, screen_height))
+
+pygame.display.set_caption("즐겁다 햄버거집")
 
 #게임 데이터
 satisfaction = 10
@@ -21,6 +26,7 @@ order_guest = 0
 order_menu = 0
 random_things = 0
 hamtop_yPos = 285
+today = 1
 choose_things = []
 
 # 0 : 인트로 , 1 : 인트로 스토리 , 2 : 튜토리얼 ,3 : 게임진행 , 4 : 하루 끝 , 5 : 게임 끝
@@ -31,6 +37,8 @@ guest_presence_or_absence = 0
 order_text_check = 0
 odbar_food_yPos = 0
 first_guest = 1
+first_dayend_bg = 0
+day_end_button = 0
 
 # def food_all_alpha(a):
 #         food_01.img.set_alpha(a) 
@@ -43,12 +51,36 @@ first_guest = 1
 #         food_08.img.set_alpha(a) 
 #         food_09.img.set_alpha(a) 
 
+def day_end(day, result, manjok, money):
+    if result == "good":
+        end_bg = pygame.image.load(f"project\source\day_end\day{day}G.png")
+        manjokdo = game_font_B.render(str(manjok), False, (0, 0, 0))
+        money_sum = game_font_B.render(str(money), False, (0, 0, 0))
+        report = game_font_L.render(daily_report[day][0], False, (0, 0, 0))
+        report_x = report.get_rect()[0]
+    else:
+        end_bg = pygame.image.load(f"project\source\day_end\day{day}B.png")
+        manjokdo = game_font_B.render(str(manjok), False, (0, 0, 0))
+        money_sum = game_font_B.render(str(money), False, (0, 0, 0))
+        report = game_font_L.render(daily_report[day][1], False, (0, 0, 0))
+        report_x = report.get_rect()[0]
+    
+    report_size = report.get_rect().size
+    report_x = report_size[0]
+    
+    screen.blit(end_bg, (0, 0)) # blit = 배경 그리기
+    screen.blit(manjokdo, (190, 135))
+    screen.blit(money_sum, (410, 135))
+    screen.blit(report, (screen_width / 2 - report_x / 2, screen_height - (screen_height / 3)))
+    pygame.display.update()  
+
 def hamtop_yPos_re():
     bread_top.y = hamtop_yPos
     food_01.y = hamtop_yPos
     food_02.y = hamtop_yPos
     food_03.y = hamtop_yPos
     food_04.y = hamtop_yPos
+    food_05.y = hamtop_yPos
     food_06.y = hamtop_yPos
     food_07.y = hamtop_yPos
     food_08.y = hamtop_yPos
@@ -88,9 +120,9 @@ def order_menu_show(hle):
             elif order_menu[0][i] == 4:
                 food_04_odbar.y = odbar_food_yPos
                 food_04_odbar.show()
-            # elif order_menu[0][i] == 5:
-            #     food_05_odbar.y = odbar_food_yPos
-            #     food_05_odbar.show()
+            elif order_menu[0][i] == 5:
+                food_05_odbar.y = odbar_food_yPos
+                food_05_odbar.show()
             elif order_menu[0][i] == 6:
                 food_06_odbar.y = odbar_food_yPos
                 food_06_odbar.show()
@@ -217,11 +249,11 @@ food_04_ran.change_size(150, 150)
 food_04_ran.x = (screen_width / 2) - (food_04_ran.img.get_size()[0] / 2)
 food_04_ran.y = 0
 
-# food_02 = imageload()
-# food_02.put_img("project/source/food/patty.png")
-# food_02.change_size(150, 150)
-# food_02.x = (screen_width / 2) - (food_02.img.get_size()[0] / 2)
-# food_02.y = 0
+food_05_ran = imageload()
+food_05_ran.put_img("project/source/food/bean_patty.png")
+food_05_ran.change_size(150, 150)
+food_05_ran.x = (screen_width / 2) - (food_05_ran.img.get_size()[0] / 2)
+food_05_ran.y = 0
 
 food_06_ran = imageload()
 food_06_ran.put_img("project/source/food/lettuce.png")
@@ -247,7 +279,7 @@ food_09_ran.change_size(150, 150)
 food_09_ran.x = (screen_width / 2) - (food_09_ran.img.get_size()[0] / 2)
 food_09_ran.y = 0
 
-foodran_img = [food_01_ran, food_02_ran, food_03_ran, food_04_ran, food_06_ran, food_07_ran, food_08_ran, food_09_ran]
+foodran_img = [food_01_ran, food_02_ran, food_03_ran, food_04_ran, food_05_ran, food_06_ran, food_07_ran, food_08_ran, food_09_ran]
 
 #식재료(쌓는용)
 
@@ -288,7 +320,7 @@ food_04.x = screen_width / 2 - 105
 food_04.y = hamtop_yPos
 
 food_05 = imageload()
-food_05.put_img("project/source/food/shirip.png")
+food_05.put_img("project/source/food/bean_patty.png")
 food_05.change_size(200 , 200)
 food_05.x = screen_width / 2 - 105
 food_05.y = hamtop_yPos
@@ -317,7 +349,7 @@ food_09.change_size(200 , 200)
 food_09.x = screen_width / 2 - 105
 food_09.y = hamtop_yPos
 
-foodstack_img = [food_01, food_02, food_03, food_04, food_06, food_07, food_08, food_09]
+foodstack_img = [food_01, food_02, food_03, food_04, food_05, food_06, food_07, food_08, food_09]
 
 #식재료(주문내용)
 
@@ -357,11 +389,11 @@ food_04_odbar.change_size(100 , 100)
 food_04_odbar.x = screen_width - 100
 food_04_odbar.y = 0
 
-# food_05_odbar = imageload()
-# food_05_odbar.put_img("project/source/food/shirip.png")
-# food_05_odbar.change_size(100 , 100)
-# food_05_odbar.x = screen_width - 100
-# food_05_odbar.y = 0
+food_05_odbar = imageload()
+food_05_odbar.put_img("project/source/food/bean_patty.png")
+food_05_odbar.change_size(100 , 100)
+food_05_odbar.x = screen_width - 100
+food_05_odbar.y = 0
 
 food_06_odbar = imageload()
 food_06_odbar.put_img("project/source/food/lettuce.png")
@@ -428,77 +460,146 @@ foodbg.change_size(200, 120)
 foodbg.x = screen_width / 2 - 65
 foodbg.y = 15
 
+game_font_L = pygame.font.Font("project/source/font/MP_L.ttf", 25) #일기표시
+game_font_B = pygame.font.Font("project/source/font/MP_B.ttf", 40)
+
 running = True
 
 while running:
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False   
-        
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if start_button.rect.collidepoint(event.pos) == True:
-                if game_progress_state == 0:
-                    game_progress_state = 1
-                    story_bg.show()
-                    ok_button.show()
-            if ok_button.rect.collidepoint(event.pos) == True:
-                if game_progress_state == 1:
-                    tutorial_bg.show()
-                    ok_button.show()
-                    game_progress_state = 2
-                if game_progress_state == 2:
-                    okbt_press_state += 1
-                    if okbt_press_state >= 2:
-                        game_bg.show()
-                        pygame.display.update()
-                        game_progress_state = 3
-                        pygame.time.delay(2000)
-                        guest_presence_or_absence = 1
-                        order_text.show()
-                        menu_bar.show()
-                        odtx_button.show()
-            if odtx_button.rect.collidepoint(event.pos) == True:
-                if game_progress_state == 3:
-                    odtx_press_state += 1
-                    if odtx_press_state >= 2 and order_text_check == 0:
-                        order_text_check = 1
-                        game_bg.show()
-                        menu_bar.show()
-                        bread_bottom.show()
-                        order_guest_img.show()
-                        random_things = random.randint(1, len(foodran_img))
-                        ranfood_img = foodran_img[random_things - 1]
-                        stackfood_img = foodstack_img[random_things - 1]
-                        foodbg.show()
-                        ranfood_img.show()
-                        
-                        print(order_menu)
-                        
-                        order_menu_show(3)
-                        order_menu_show(4)
-                        order_menu_show(5)
-                        order_menu_show(7)
-                        order_menu_show(9)
+    while passed_days < 7 and running:
+        while satisfaction > passed_guest and running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False   
+                
+                yesterday_moeny = money
+                day_end_button = 0
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_e:
-                if order_text_check == 1:
-                    hamtop_yPos -= 10
-                    hamtop_yPos_re()
-                    bread_top.show()
-                    pygame.display.update()
-                    pygame.time.delay(1000)
-                    first_guest = 0
-                    passed_guest += 1
-                    guest_presence_or_absence = 1
-                    game_bg.show()
-                    pygame.display.update()
-                    pygame.time.delay(2000)
-                    menu_bar.show()
-                    order_text.show()
-                    odtx_button.show()
-                    order_text_check = 0
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if start_button.rect.collidepoint(event.pos) == True:
+                        if game_progress_state == 0:
+                            game_progress_state = 1
+                            story_bg.show()
+                            ok_button.show()
+                    if ok_button.rect.collidepoint(event.pos) == True:
+                        if game_progress_state == 1:
+                            tutorial_bg.show()
+                            ok_button.show()
+                            game_progress_state = 2
+                        if game_progress_state == 2:
+                            okbt_press_state += 1
+                            if okbt_press_state >= 2:
+                                game_bg.show()
+                                pygame.display.update()
+                                game_progress_state = 3
+                                pygame.time.delay(2000)
+                                guest_presence_or_absence = 1
+                                order_text.show()
+                                menu_bar.show()
+                                odtx_button.show()
+                    if odtx_button.rect.collidepoint(event.pos) == True:
+                        if game_progress_state == 3:
+                            odtx_press_state += 1
+                            if odtx_press_state >= 2 and order_text_check == 0:
+                                order_text_check = 1
+                                game_bg.show()
+                                menu_bar.show()
+                                bread_bottom.show()
+                                order_guest_img.show()
+                                random_things = random.randint(1, len(foodran_img))
+                                ranfood_img = foodran_img[random_things - 1]
+                                stackfood_img = foodstack_img[random_things - 1]
+                                foodbg.show()
+                                ranfood_img.show()
+                                
+                                print(order_menu)
+                                
+                                order_menu_show(3)
+                                order_menu_show(4)
+                                order_menu_show(5)
+                                order_menu_show(7)
+                                order_menu_show(9)
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        if order_text_check == 1:
+                            hamtop_yPos -= 10
+                            hamtop_yPos_re()
+                            choose_things.sort()
+                            print(choose_things, order_menu[4])
+                            if choose_things == order_menu[4]:
+                                money += order_menu[1]
+                                if satisfaction < 10:
+                                    satisfaction += 0.25
+                            elif choose_things != order_menu[4] and satisfaction > 1:
+                                money -= 2000
+                                satisfaction -= 1
+                            choose_things = []
+                            print(money,satisfaction)
+                            bread_top.show()
+                            pygame.display.update()
+                            pygame.time.delay(1000)
+                            first_guest = 0
+                            passed_guest += 1
+                            guest_presence_or_absence = 1
+                            game_bg.show()
+                            pygame.display.update()
+                            pygame.time.delay(2000)
+                            menu_bar.show()
+                            order_text.show()
+                            odtx_button.show()
+                            order_text_check = 0
+
+                            order_guest = guests[random.randint(0, len(guests)-1)]
+                            if order_guest == normal_guest:
+                                order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
+                            elif order_guest == fat_guest:
+                                order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
+                            elif order_guest == weird_guest:
+                                order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
+                            
+                            order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
+                            order_guest_img.show()
+                            
+                            hamtop_yPos = 285
+
+                    if event.key == pygame.K_f:
+                        if game_progress_state == 3 and order_text_check == 1: 
+                            random_things = random.randint(1, len(foodran_img))
+                            ranfood_img = foodran_img[random_things - 1]
+                            stackfood_img = foodstack_img[random_things - 1]
+                            foodbg.show()
+                            ranfood_img.show()
+                            money -= 300
+                            print(money)
+
+                    if event.key == pygame.K_SPACE:
+                        if game_progress_state == 3 and order_text_check == 1:
+                            hamtop_yPos -= 10
+                            hamtop_yPos_re()
+                            choose_things.append(random_things)
+                            print(choose_things)
+                            stackfood_img.show()
+                        
+            
+            if game_progress_state == 3:
+                
+            #     while passed_guest < satisfaction:
+
+                # order_guest = guests[random.randint(0, len(guests)-1)]
+                # if order_guest == normal_guest:
+                #     order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
+                # elif order_guest == fat_guest:
+                #     order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
+                # elif order_guest == weird_guest:
+                #     order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
+
+        
+
+                if guest_presence_or_absence == 1:
+                    if first_guest == 1:
+                        order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
+                        order_guest_img.show() 
 
                     order_guest = guests[random.randint(0, len(guests)-1)]
                     if order_guest == normal_guest:
@@ -507,169 +608,142 @@ while running:
                         order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
                     elif order_guest == weird_guest:
                         order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
+
+                    guest_presence_or_absence = 0
                     
-                    order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
-                    order_guest_img.show()
-                    
-                    hamtop_yPos = 285
 
-            if event.key == pygame.K_f:
-                if game_progress_state == 3 and order_text_check == 1: 
-                    random_things = random.randint(1, len(foodran_img))
-                    ranfood_img = foodran_img[random_things - 1]
-                    stackfood_img = foodstack_img[random_things - 1]
-                    foodbg.show()
-                    ranfood_img.show()
-
-            if event.key == pygame.K_SPACE:
-                if game_progress_state == 3 and order_text_check == 1:
-                    hamtop_yPos -= 10
-                    hamtop_yPos_re()
-                    choose_things.append(random_things)
-                    print(choose_things)
-                    stackfood_img.show()
-                
-    
-    if game_progress_state == 3:
-        
-    #     while passed_guest < satisfaction:
-
-        order_guest = guests[random.randint(0, len(guests)-1)]
-        if order_guest == normal_guest:
-            order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
-        elif order_guest == fat_guest:
-            order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
-        elif order_guest == weird_guest:
-            order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
-
- 
-
-        if guest_presence_or_absence == 1:
-            if first_guest == 1:
-                order_guest_img = guests_img[random.randint(0, len(guests_img)-1)]
-                order_guest_img.show() 
-
-            order_guest = guests[random.randint(0, len(guests)-1)]
-            if order_guest == normal_guest:
-                order_menu = normal_guest[random.randint(0, len(normal_guest)-2)]
-            elif order_guest == fat_guest:
-                order_menu = fat_guest[random.randint(0, len(fat_guest)-2)]
-            elif order_guest == weird_guest:
-                order_menu = weird_guest[random.randint(0, len(weird_guest)-2)]
-
-            guest_presence_or_absence = 0
             
-
-    
-        # if passed_guest >= 10:
-        #     print(1)
-        #     game_progress_state = 4
-            # pygame.event
-        # print("{0}버거 주세요".format(order_menu[2]))
-        # print(order_menu[0])
+                # if passed_guest >= 10:
+                #     print(1)
+                #     game_progress_state = 4
+                    # pygame.event
+                # print("{0}버거 주세요".format(order_menu[2]))
+                # print(order_menu[0])
 
 
-    #     if order_guest[1] == "weird": 
-    #         random_things = random.randint(11, 13)
-    #     else:
-    #         random_things = random.randint(1, 6)
-    #     print(random_things)
+            #     if order_guest[1] == "weird": 
+            #         random_things = random.randint(11, 13)
+            #     else:
+            #         random_things = random.randint(1, 6)
+            #     print(random_things)
 
-    #     while press_key != "e":
-    #         f 누르고 엔터 : 재료 바꾸기, e 누르고 엔터 : 음식 완성 , 엔터 : 재료 선택
-    #         print("----------------------")
-    #         # press_key = input("[ F : Change , Enter : Choose , E : complete ]")
-    #         if press_key == "f":
-    #             if order_guest[1] == "weird": 
-    #                 random_things = random.randint(11, 13)
-    #             else:
-    #                 random_things = random.randint(1, 6)
-    #             print(random_things)
-    #             money -= 500
-    #         elif press_key == "e":
-    #             if order_menu[0] == choose_things:
-    #                 print("perfect")
-    #                 print("잘만드노 ㅋ")
-    #                 money += order_menu[1]
-    #             else:
-    #                 choose_things.sort()
-    #                 if choose_things == order_menu[0]:
-    #                     print("complete")
-    #                     print("야미")
-    #                     money += order_menu[1]
-    #                 else:
-    #                     print("ㅈㄴ못만드네")
-    #                     money -= 2000
-    #                     satisfaction -= 1
-    #         elif press_key != "e" or "f":
-    #             if press_key == "":
-    #                 choose_things.append(random_things)
-    #             else:
-    #                 continue
-    #         print(choose_things)
-    #         print(order_menu[0])
-    #         print("남은돈 : {0}".format(money))
+            #     while press_key != "e":
+            #         f 누르고 엔터 : 재료 바꾸기, e 누르고 엔터 : 음식 완성 , 엔터 : 재료 선택
+            #         print("----------------------")
+            #         # press_key = input("[ F : Change , Enter : Choose , E : complete ]")
+            #         if press_key == "f":
+            #             if order_guest[1] == "weird": 
+            #                 random_things = random.randint(11, 13)
+            #             else:
+            #                 random_things = random.randint(1, 6)
+            #             print(random_things)
+            #             money -= 500
+            #         elif press_key == "e":
+            #             if order_menu[0] == choose_things:
+            #                 print("perfect")
+            #                 print("잘만드노 ㅋ")
+            #                 money += order_menu[1]
+            #             else:
+            #                 choose_things.sort()
+            #                 if choose_things == order_menu[0]:
+            #                     print("complete")
+            #                     print("야미")
+            #                     money += order_menu[1]
+            #                 else:
+            #                     print("ㅈㄴ못만드네")
+            #                     money -= 2000
+            #                     satisfaction -= 1
+            #         elif press_key != "e" or "f":
+            #             if press_key == "":
+            #                 choose_things.append(random_things)
+            #             else:
+            #                 continue
+            #         print(choose_things)
+            #         print(order_menu[0])
+            #         print("남은돈 : {0}".format(money))
 
-    #         print("----------------------")
+            #         print("----------------------")
 
-    #     passed_guest += 1  
+            #     passed_guest += 1  
 
-    #     if satisfaction > 10:
-    #         satisfaction = 10
+            #     if satisfaction > 10:
+            #         satisfaction = 10
 
-    #     if satisfaction <= 0:
-    #         print("만족도가 너무 하락하여 알바를 고용하였습니다 (만족도 2 상승)")
-    #         satisfaction = 2
-    #         money - 10000
+            #     if satisfaction <= 0:
+            #         print("만족도가 너무 하락하여 알바를 고용하였습니다 (만족도 2 상승)")
+            #         satisfaction = 2
+            #         money - 10000
 
-    #     if money < 0:
-    #         if loan_state == 0:
-    #             print("돈이 다 떨어져 빚을 졌습니다")
-    #             loan_state = 1
-    #     else:
-    #         loan_state = 0
+            #     if money < 0:
+            #         if loan_state == 0:
+            #             print("돈이 다 떨어져 빚을 졌습니다")
+            #             loan_state = 1
+            #     else:
+            #         loan_state = 0
 
-    
-    # passed_guest = 0
-    # passed_days += 1
-    # print("----------------------")
-    # print("하루가 지났다 | {0}일차 끝".format(passed_days))
-    # print("남은돈 : {0}".format(money))
-    # print("만족도 : {0}".format(satisfaction))
-    # print("----------------------")
+            
+            # passed_guest = 0
+            # passed_days += 1
+            # print("----------------------")
+            # print("하루가 지났다 | {0}일차 끝".format(passed_days))
+            # print("남은돈 : {0}".format(money))
+            # print("만족도 : {0}".format(satisfaction))
+            # print("----------------------")
 
 
-    # food_01.show()
-    # food_02.show()
-    # food_03.show()
-    # food_04.show()
-    # # food_05.show()
-    # food_06.show()
-    # food_07.show()
-    # food_08.show()
-    # food_09.show()
-    # food_all_alpha(0)
+            # food_01.show()
+            # food_02.show()
+            # food_03.show()
+            # food_04.show()
+            # # food_05.show()
+            # food_06.show()
+            # food_07.show()
+            # food_08.show()
+            # food_09.show()
+            # food_all_alpha(0)
 
-    # guests_01.show()
-    # guests_02.show()
-    # guests_03.show()
-    # guests_04.show()
-    # guests_05.show()
-    # guests_06.show()
-    # guests_07.show()
+            # guests_01.show()
+            # guests_02.show()
+            # guests_03.show()
+            # guests_04.show()
+            # guests_05.show()
+            # guests_06.show()
+            # guests_07.show()
 
 
 
 
-    if game_progress_state == 0:
-        intro_bg.show()
-        start_button.show()
-    
-        # for i in range(0, 7):
-        #     print(guests_img[i].get_alpha())
-        # print("========")
+            if game_progress_state == 0:
+                intro_bg.show()
+                start_button.show()
+            
+                # for i in range(0, 7):
+                #     print(guests_img[i].get_alpha())
+                # print("========")
 
 
-    pygame.display.update()
+            pygame.display.update()
+
+        if running and first_dayend_bg == 0:
+            game_progress_state = 4
+
+            if yesterday_moeny < money:
+                today_result = "good"
+            else:
+                today_result = "bad"
+            
+            day_end(today, today_result, satisfaction, money)
+            
+            ok_button.show()
+            pygame.display.update()
+
+            first_dayend_bg = 1
+
+            while day_end_button != 1:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if ok_button.rect.collidepoint(event.pos) == True and game_progress_state == 4:
+                        day_end_button = 1
+        
+        game_progress_state = 3
 
 pygame.quit()
