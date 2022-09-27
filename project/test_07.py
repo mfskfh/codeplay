@@ -487,6 +487,7 @@ while running:
                     guest_presence_or_absence = 1
                     first_guest = 1
                     days_fisrt = 0
+                    first_dayend_bg = 1
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
