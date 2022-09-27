@@ -10,7 +10,7 @@
 import pygame
 from text_data import daily_report
 
-# pygame.init() # 초기화 (반드시 필요)
+pygame.init() # 초기화 (반드시 필요)
 
 #화면크기 설정
 screen_width = 640 # 가로크기
@@ -48,7 +48,7 @@ def day_end(day, result, manjok, money):
     #그림, 텍스트, 숫자 등 화면에 필요한 내용 보여주기
     #일정시간 기다리기
     #종료.
-    # pygame.time.delay(2000)         
+    pygame.time.delay(3000)         
 
 # for days in range(7):
 #     day_end(days + 1, "good", 8, 10000)

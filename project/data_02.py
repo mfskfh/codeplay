@@ -8,11 +8,8 @@ double = [[6, 1, 2, 6, 1, 2, 9], 7600, "double", "더블버거", [1, 1, 2, 2, 6,
 chibeef = [[6, 3, 2, 8, 9], 6500, "chibeef", "치킨불고기버거", [2, 3, 6, 8, 9]]
 allin = [[1, 2, 3, 4, 5, 6, 7, 8, 9], 12000, "allin", "올인버거", [1, 2, 3, 4, 5, 6, 7, 8, 9]]
 
-foot = [[11, 12, 13], 4500, "foot", "닭발버거", [11, 12, 13]]
-
 normal_guest = [bulgogi, cheese, chicken, vegan, shrimp, "normal"]
 fat_guest = [double, chibeef, allin, "fat"]
-weird_guest = [foot, "weird"]
 
-guests = [normal_guest, fat_guest, weird_guest]
-burger = [bulgogi, cheese, double, allin, foot]
+guests = [normal_guest, fat_guest]
+burger = [bulgogi, cheese, double, allin]
