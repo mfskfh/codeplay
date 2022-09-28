@@ -16,6 +16,9 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 
 pygame.display.set_caption("즐겁다 햄버거집")
 
+game_font_L = pygame.font.Font("project/source/font/MP_L.ttf", 25)
+game_font_B = pygame.font.Font("project/source/font/MP_B.ttf", 40)
+
 #게임 데이터
 satisfaction = 10
 money = 15000
@@ -437,8 +440,21 @@ foodbg.change_size(200, 120)
 foodbg.x = screen_width / 2 - 65
 foodbg.y = 15
 
-game_font_L = pygame.font.Font("project/source/font/MP_L.ttf", 25) #일기표시
-game_font_B = pygame.font.Font("project/source/font/MP_B.ttf", 40)
+money_ui = imageload()
+money_ui.put_img("project/source/ui/money.png")
+money_ui.x = 10
+money_ui.change_size(150, 50)
+money_ui.y = 10
+
+satisfaction_ui = imageload()
+satisfaction_ui.put_img("project/source/ui/manjok.png")
+satisfaction_ui.change_size(150, 50)
+satisfaction_ui.x = 10
+satisfaction_ui.y = 70
+
+show_money = game_font_L.render(str(money), False, (0, 0, 0))
+show_satisfaction = game_font_L.render(str(satisfaction), False, (0, 0, 0))
+
 
 running = True
 
@@ -480,6 +496,10 @@ while running:
                             okbt_press_state += 1
                             if okbt_press_state >= 2:
                                 game_bg.show()
+                                money_ui.show()
+                                satisfaction_ui.show()
+                                screen.blit(show_money, (55, 20))
+                                screen.blit(show_satisfaction, (75, 80))
                                 pygame.display.update()
                                 game_progress_state = 3
                                 pygame.time.delay(2000)
@@ -591,7 +611,13 @@ while running:
             if game_progress_state == 0:
                 intro_bg.show()
                 start_button.show()
-
+            elif game_progress_state == 3:
+                money_ui.show()
+                satisfaction_ui.show()
+                show_money = game_font_L.render(str(money), False, (0, 0, 0))
+                show_satisfaction = game_font_L.render(str(satisfaction), False, (0, 0, 0))
+                screen.blit(show_money, (55, 20))
+                screen.blit(show_satisfaction, (75, 80))
 
             pygame.display.update()
 
