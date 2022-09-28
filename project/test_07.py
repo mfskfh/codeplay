@@ -19,6 +19,7 @@ pygame.display.set_caption("즐겁다 햄버거집")
 #게임 데이터
 satisfaction = 10
 money = 15000
+yesterday_moeny = 15000
 passed_days = 0
 passed_guest = 0
 
@@ -472,8 +473,6 @@ while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                
-                yesterday_moeny = money
 
                 if today != 1 and days_fisrt == 1:
                     game_bg.show()
@@ -487,7 +486,8 @@ while running:
                     guest_presence_or_absence = 1
                     first_guest = 1
                     days_fisrt = 0
-                    first_dayend_bg = 1
+                    first_dayend_bg = 0
+                    yesterday_moeny = money
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
@@ -636,6 +636,8 @@ while running:
 
         if running and first_dayend_bg == 0:
             game_progress_state = 4
+
+            print(yesterday_moeny,money)
 
             if yesterday_moeny < money:
                 today_result = "good"
