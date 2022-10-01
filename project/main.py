@@ -622,8 +622,10 @@ while running:
                 today_result = "good"
             else:
                 today_result = "bad"
-            
-            day_end(today, today_result, satisfaction, money)
+            if today <= 7:
+                day_end(today, today_result, satisfaction, money)
+            else:
+                running = False
             
             passed_guest = 0
             first_dayend_bg = 1
@@ -648,7 +650,20 @@ while running:
         
         pygame.display.update()
         pygame.time.delay(5000)
-        
-        break
+
+if money >= 50000:
+    game_end_good.show()
+elif money < 50000 and money >= 25000:
+    game_end_normal.show()
+elif money < 25000 and money > 0:
+    game_end_bad.show()
+elif money <= 0:
+    game_end_vbad
+
+if satisfaction < 5:
+    game_end_bad.show()
+
+pygame.display.update()
+pygame.time.delay(5000)
 
 pygame.quit()

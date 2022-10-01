@@ -28,13 +28,13 @@ def day_end(day, result, manjok, money):
         end_bg = pygame.image.load(f"project\source\day_end\day{day}G.png")
         manjokdo = game_font_B.render(str(manjok), False, (0, 0, 0))
         money_sum = game_font_B.render(str(money), False, (0, 0, 0))
-        report = game_font_L.render(daily_report[day][0], False, (0, 0, 0))
+        report = game_font_L.render(daily_report[day-1][0], False, (0, 0, 0))
         report_x = report.get_rect()[0]
     else:
         end_bg = pygame.image.load(f"project\source\day_end\day{day}B.png")
         manjokdo = game_font_B.render(str(manjok), False, (0, 0, 0))
         money_sum = game_font_B.render(str(money), False, (0, 0, 0))
-        report = game_font_L.render(daily_report[day][1], False, (0, 0, 0))
+        report = game_font_L.render(daily_report[day-1][1], False, (0, 0, 0))
         report_x = report.get_rect()[0]
     
     report_size = report.get_rect().size
