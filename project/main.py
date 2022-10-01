@@ -57,15 +57,6 @@ def hamtop_yPos_re():
     food_08.y = hamtop_yPos
     food_09.y = hamtop_yPos
 
-def guest_all_alpha(a):
-    guests_01.img.set_alpha(a) 
-    guests_02.img.set_alpha(a)
-    guests_03.img.set_alpha(a) 
-    guests_04.img.set_alpha(a) 
-    guests_05.img.set_alpha(a)
-    guests_06.img.set_alpha(a) 
-    guests_07.img.set_alpha(a) 
-
 def order_menu_texting():
     odmn = game_font_L.render(f"{order_menu[3]} 주세요", False, (0, 0, 0))
     screen.blit(odmn, (35 ,screen_height - 125))
@@ -107,8 +98,6 @@ def order_menu_show(hle):
         odbar_food_yPos -= 140 + (35 * (hle - 3))
         bread_top_odbar.y = odbar_food_yPos
         bread_top_odbar.show()
-
-
 
 class imageload:
     def __init__(self):
@@ -625,7 +614,7 @@ while running:
             if today <= 7:
                 day_end(today, today_result, satisfaction, money)
             else:
-                running = False
+                break
             
             passed_guest = 0
             first_dayend_bg = 1
@@ -651,19 +640,20 @@ while running:
         pygame.display.update()
         pygame.time.delay(5000)
 
-if money >= 50000:
-    game_end_good.show()
-elif money < 50000 and money >= 25000:
-    game_end_normal.show()
-elif money < 25000 and money > 0:
-    game_end_bad.show()
-elif money <= 0:
-    game_end_vbad
+if running:
+    if money >= 50000:
+        game_end_good.show()
+    elif money < 50000 and money >= 25000:
+        game_end_normal.show()
+    elif money < 25000 and money > 0:
+        game_end_bad.show()
+    elif money <= 0:
+        game_end_vbad
 
-if satisfaction < 5:
-    game_end_bad.show()
+    if satisfaction < 5:
+        game_end_bad.show()
 
-pygame.display.update()
-pygame.time.delay(5000)
+    pygame.display.update()
+    pygame.time.delay(5000)
 
 pygame.quit()
