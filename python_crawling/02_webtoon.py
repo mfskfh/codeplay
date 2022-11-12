@@ -12,11 +12,37 @@ resource.raise_for_status()
 
 soup = BeautifulSoup(resource.text, "lxml")
 
-monday1 = soup.find("a", attrs = {"class" : "title"})
+# sat_all = soup.find("div", attrs={"class" : "col col_selected"})
+# # print(sat_all)
 
-monday2 = monday1
+# sat_all_title = sat_all.find_all("a", attrs={"class" : "title"})
+# # print(sat_all_title[0].get_text())
 
-print(monday1.get_text(), monday2.get_text())
+count = 1
 
-# monday = allday.find("div", attrs = {"class" : "thumb"})
-# print(monday)
+# for top10 in sat_all_title:
+#     print(f"토요웹툰 {count}위 : {top10.get_text()}")
+#     count += 1
+#     if count > 10:
+#         break
+
+week_all = soup.find_all("div", attrs={"class" : "col"})
+wed_all = week_all[2]
+wed_all_title = wed_all.find_all("a", attrs={"class" : "title"})
+
+for top10 in wed_all_title:
+    print(f"수요웹툰 {count}위 : {top10.get_text()}")
+    count += 1
+    if count > 10:
+        break
+
+count = 1
+
+popularity_webtoon = soup.find("ol", attrs={"class" : "asideBoxRank"})
+popularity_webtoon_title = popularity_webtoon.find_all("a")
+
+for top10 in popularity_webtoon_title:
+    print(f"인기급상승웹툰 {count}위 : {top10.get_text()}")
+    count += 1
+    if count > 10:
+        break
