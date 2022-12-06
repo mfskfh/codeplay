@@ -2,37 +2,36 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+browser = webdriver.Chrome()
 
+# browser.get("https://www.op.gg/")
 
-broweer = webdriver.Chrome()
+# elem = browser.find_element(By.ID, "searchHome")
+user = "실력이너무낮다"
+# elem.send_keys(user)
+# time.sleep(1)
+# elem.send_keys(Keys.ENTER)
 
-broweer.get("https://www.op.gg/champions")
+# time.sleep(1)
 
-elem = broweer.find_element(By.ID, "search")
-elem.send_keys("실력이너무낮다")
+user_list = []
+browser.get(f"https://www.op.gg/summoners/kr/{user}")
 time.sleep(1)
-elem.send_keys(Keys.ENTER)
 
+elem = browser.find_element(By.CLASS_NAME, "tier")
 time.sleep(1)
-broweer.get("https://naver.com")
+user_list.append(elem.text)
 
-elem = broweer.find_element(By.ID, "query")
-elem.send_keys("아리")
+elem = browser.find_element(By.CLASS_NAME, "lp")
 time.sleep(1)
-elem.send_keys(Keys.ENTER)
+user_list.append(elem.text)
 
+elem = browser.find_elements(By.CLASS_NAME, "k-d-a")
 time.sleep(1)
-broweer.get("https://dinorunner.com/ko/")
+user_list.append(elem[1].text)
 
-elem = broweer.find_element(By.CLASS_NAME, "game__start")
-time.sleep(1)
-elem.click()
-elem = broweer.find_element(By.CLASS_NAME, "runner-canvas")
-time.sleep(1)
-elem.send_keys(Keys.SPACE)
+print(user_list)
 
-
-
-while True:
-    if "q" == input("quit?"):
-        break
+# while True:
+#     if "q" == input("quit?"):
+#         break
