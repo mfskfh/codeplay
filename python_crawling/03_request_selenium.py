@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 browser = webdriver.Chrome()
 user = input("소환사이름 입력 : ")
-url= f"https://www.op.gg/summoners/kr/{user}"
+url = f"https://www.op.gg/summoners/kr/{user}"
 user = 0
 
 browser.get(url)
